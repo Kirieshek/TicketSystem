@@ -1,9 +1,5 @@
-<template>
-    <v-app>
-      <v-main>
-        <LoginForm />
-      </v-main>
-    </v-app>
+  <template>
+    <LoginForm />
   </template>
   
   <script>

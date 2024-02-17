@@ -40,7 +40,7 @@ nav a.router-link-exact-active {
   align-items: center;
   position: relative;
   z-index: 1000;
-  margin-left: 730px;
+  margin-left: 625px;
   margin-top: 10px;
 }
 

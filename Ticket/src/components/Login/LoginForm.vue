@@ -130,6 +130,7 @@
     }),
     methods: {
       validateForm() {
+
       this.errorsEmail = [];
       this.errorsPassword = [];
       this.errorsLogin = [];
@@ -146,7 +147,14 @@
         this.errorsLogin.push('Логин должеть быть больше 5 символов');
       }
 
-      if (this.errorsLogin.length === 0 && this.errorsPassword.length === 0 && this.errorsEmail.length === 0)  {
+      const userData = {
+        login: this.login,
+        password: this.password
+      }
+
+      this.$store.commit('LOGIN', userData)
+
+      if (this.errorsLogin.length === 0 && this.errorsPassword.length === 0 && this.errorsEmail.length === 0 && this.$store.state.user.currentUser != ''){
         this.$router.push('/')
       }
     }
@@ -192,6 +200,7 @@
       border-radius: 25px;
       flex-direction: column;
       box-shadow: 1px 1px 10px rgb(189, 189, 189);
+      margin-top: 60px;
     }
 
     .tittle {
