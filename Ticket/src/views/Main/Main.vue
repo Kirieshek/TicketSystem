@@ -1,14 +1,19 @@
 <template>
   <div class="container">
-      <div class="nothing">Main</div>
+      <div class="nothing">
 
-    <p>{{ this.$store.state.counter.count }}</p>
-    <p>{{ this.user }}</p>
+      </div>
 
-    <div class="btn">
+      <span v-for="userInfo in this.user" :key="id">  
+        {{ userInfo.login }}
+      </span>
+    <!-- <p>{{ this.$store.state.counter.count }}</p> -->
+
+
+    <!-- <div class="btn">
       <button @click="increment">Добавить +1</button>
       <button @click="setNewCount">Сделать 999</button>
-    </div>
+    </div> -->
   </div>
 
 </template>
@@ -40,7 +45,7 @@
   }
 </script>
   
-<style>
+<style scoped>
   .nothing {
     margin-top: 250px;
   }

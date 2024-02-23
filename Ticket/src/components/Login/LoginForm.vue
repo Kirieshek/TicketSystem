@@ -53,8 +53,15 @@
               type="text"
               class="input"
             />
-            <v-btn @click="validateForm" type="submit" block class="mt-2">ВОЙТИ  </v-btn>
-
+            <v-btn @click="validateForm" type="submit" class="mt-2" block>ВОЙТИ</v-btn>
+            <div class="box2">
+              <div v-if="errorsAuth.length" class="errorBox">
+                <span v-for="error in errorsAuth" class="error">{{ error }}<br></span>
+              </div>
+              <div v-if="!errorsAuth.length">
+                <div class="empty"></div>
+              </div>
+            </div>
             <v-row align="center" justify="center">
           <v-col
             v-for="(variant, i) in variants"
@@ -101,6 +108,8 @@
       errorsLogin: [],
       errorsPassword: [],
       errorsEmail: [],
+      errorsAuth: [],
+
         // rulesLogin: [
         //   value => {
         //     if (value) {
@@ -134,6 +143,7 @@
       this.errorsEmail = [];
       this.errorsPassword = [];
       this.errorsLogin = [];
+      this.errorsAuth = [];
 
       if (!this.email.includes('@')) {
         this.errorsEmail.push('Электронная почта должна содержать "@"');
@@ -154,11 +164,16 @@
 
       this.$store.commit('LOGIN', userData)
 
-      if (this.errorsLogin.length === 0 && this.errorsPassword.length === 0 && this.errorsEmail.length === 0 && this.$store.state.user.currentUser != ''){
-        this.$router.push('/')
+      if (this.errorsLogin.length === 0 && this.errorsPassword.length === 0 && this.errorsEmail.length === 0){
+        if(this.$store.state.user.currentUser === ''){
+          this.errorsAuth.push('Аккаунт не существует');
+        }
+        else{
+          this.$router.push('/profile');
+        }
       }
     }
-    }
+  }
   }
   </script>
 
@@ -169,7 +184,7 @@
     const color = ref('indigo-darken-3')
   </script>
 
-  <style>
+  <style scoped>
     body {
       margin: 0;
       padding: 0;
@@ -192,7 +207,7 @@
     }
 
     .card { 
-      height: 600px;
+      height: 630px;
       width: 450px;
       display: flex;
       align-items: center;
@@ -227,6 +242,14 @@
 
     .box {
       margin-top: -15px;
+    }
+
+    .box2{
+      margin-top: 10px;
+    }
+
+    .submit{
+      margin-bottom: 10px;
     }
   </style>
   
