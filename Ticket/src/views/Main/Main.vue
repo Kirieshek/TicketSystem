@@ -1,34 +1,33 @@
 <template>
-  <div class="container">
-      <div class="nothing">
-
-      </div>
-
-      <span v-for="userInfo in this.user" :key="id">  
-        {{ userInfo.login }}
-      </span>
-    <!-- <p>{{ this.$store.state.counter.count }}</p> -->
+  <!-- <div class="container">
+    <div class="nothing">
+    
+    </div>
+    <p>{{ this.$store.state.counter.count }}</p>
 
 
-    <!-- <div class="btn">
+    <div class="btn">
       <button @click="increment">Добавить +1</button>
-      <button @click="setNewCount">Сделать 999</button>
-    </div> -->
-  </div>
+      <button @click="setNewCount">Сделать 999</button> 
+    </div>
+  </div> -->
 
+  <MainAdmin v-if="user.role == 'Администратор'" />
+  <MainUser v-if="user.role == 'Пользователь'" />
 </template>
   
 <script>
+  import MainAdmin from './MainAdmin.vue'
+  import MainUser from './MainUser.vue'
   
   export default {
     name: 'Main',
   
     components: {
+      MainAdmin,
+      MainUser
     },
-  
-    data: () => ({
-      //
-    }),
+
     computed: {
       user() {
         return this.$store.state.user.currentUser
@@ -40,6 +39,11 @@
       },
       setNewCount() {
         this.$store.commit('setNewCount', 999)
+      }
+    },
+    mounted() {
+      if (this.user == ''){
+        this.$router.push('/login')
       }
     }
   }

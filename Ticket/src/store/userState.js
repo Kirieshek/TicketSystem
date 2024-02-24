@@ -7,7 +7,7 @@ export const userState = {
         {id: 3, fullname: "Барак Хуссейн Обама", login: "blackman", password: "iamnegrochek", email: "presidentofworld@rambler.ru", city: "Вашингтон", role: "Пользователь"},
         {id: 4, fullname: "Иван Иванов Иванович", login: "IVANchel", password: "ivanchelo", email: "ivan@mail.ru", city: "Иваново", role: "Пользователь"},
        ],
-       currentUser: '',
+       currentUser: JSON.parse(localStorage.getItem('user')) ?? '',
     },
     mutations: { // methods
         LOGIN(state, payload) {
@@ -16,6 +16,11 @@ export const userState = {
                     state.currentUser = user;
                 }
             })
+            localStorage.setItem('user', JSON.stringify(state.currentUser))
+        },
+        LogOut(state) {
+            state.currentUser = '';
+            localStorage.removeItem('user')
         },
     },
 }
