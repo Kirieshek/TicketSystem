@@ -15,7 +15,7 @@ export default createStore({
   actions: { // async functions
 
   },
-  modules: { //
+  modules: { // modules
     counter: CountStore,
     user: userState
   }

@@ -151,8 +151,8 @@
       this.errorsLogin = [];
       this.errorsAuth = [];
 
-      if (!this.email.includes('@')) {
-        this.errorsEmail.push('Электронная почта должна содержать "@"');
+      if (!this.email.includes('@') || this.email.length < 3) {
+        this.errorsEmail.push('Неправильный синтаксис электронной почты');
       }
 
       if (this.password.length < 8) {
@@ -165,7 +165,8 @@
 
       const userData = {
         login: this.login,
-        password: this.password
+        password: this.password,
+        email: this.email
       }
 
       this.$store.commit('LOGIN', userData)
