@@ -1,8 +1,11 @@
   <template>
     <div class="container">
       <div class="card">
-        <div class="tittle">АВТОРИЗАЦИЯ</div>
-        <v-sheet width="400" class="mx-auto">
+        <div class="errorAuth" v-if="this.user != ''">
+          ВЫ УЖЕ АВТОРИЗОВАНЫ
+        </div>
+        <v-sheet width="400" class="mx-auto" v-else>
+          <div class="tittle">АВТОРИЗАЦИЯ</div> 
           <v-form @submit.prevent>
             <v-text-field
               v-model="login"
@@ -85,8 +88,7 @@
             </v-card>
           </v-col>
         </v-row>
-            
-          </v-form>
+        </v-form>
         </v-sheet>
       </div>
     </div>
@@ -99,7 +101,11 @@
   
     components: {
     },
-  
+    computed: {
+      user() {
+        return this.$store.state.user.currentUser
+      }
+    },
     data: () => ({
       login: '',
       email: '',
@@ -204,6 +210,15 @@
       justify-content: center;
       flex-direction: column;
       margin-top: 10px;
+    }
+
+    .errorAuth{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font-weight: 600;
+      font-size: 20px;
     }
 
     .card { 

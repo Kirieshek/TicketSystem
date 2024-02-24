@@ -130,7 +130,7 @@
       font-size: 20px;
       color: #283593;
       font-weight: 500;
-      margin-top: 50px;
+      margin-top: 24px;
     }
 
     .info{
@@ -180,7 +180,7 @@
 
     .btn-group{
       color: rgb(124, 28, 28);
-      margin-top: 15px;
+      margin-top: 40px;
       font-size: 14px;
     }
     
