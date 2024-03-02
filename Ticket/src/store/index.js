@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import { CountStore } from './CountStore'
 import { userState } from './userState'
+import { ticketState } from './ticketState'
 
 export default createStore({
   state: { // data
@@ -17,6 +18,7 @@ export default createStore({
   },
   modules: { // modules
     counter: CountStore,
-    user: userState
+    user: userState,
+    ticket: ticketState 
   }
 })

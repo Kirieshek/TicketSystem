@@ -1,6 +1,6 @@
 export const ticketState = {
     state: { // data
-        tickets: [
+        tickets: JSON.parse(localStorage.getItem('tickets')) ?? [
             {
                 id: 0, 
                 summary: "Я System34 удалил", 
@@ -64,7 +64,23 @@ export const ticketState = {
     },
     mutations: { // methods
         ADD_TICKET(state, payload) {
-            state.tickets.push(payload)
+            let dateID = Date.now()
+            let dateCREATE = new Date
+
+            const newTicket = {
+                id: dateID, 
+                summary: payload.summary, 
+                status: "Не решено", 
+                priority: payload.priority, 
+                content: payload.content,
+                from: payload.from, 
+                create_date: dateCREATE.toLocaleString(),
+                update_date: "",
+                answer: ""
+            }
+
+            state.tickets.unshift(newTicket);
+            localStorage.setItem("tickets", JSON.stringify(state.tickets));
         },
         DELETE_TICKET(state, payload){
             state.tickets = state.tickets.filter((ticket) => {
@@ -72,6 +88,8 @@ export const ticketState = {
                     return ticket;
                 }
             })
+
+            localStorage.setItem("tickets", JSON.stringify(state.tickets));
         },
         REPLY_TICKET(state, payload){
             state.tickets.forEach(ticket => {
@@ -85,6 +103,8 @@ export const ticketState = {
                     ticket.update_date = update_date;
                 }
             });
+
+            localStorage.setItem("tickets", JSON.stringify(state.tickets)); 
         }
     },
     actions: { // async functions
