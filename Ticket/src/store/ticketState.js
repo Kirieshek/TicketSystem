@@ -1,61 +1,61 @@
 export const ticketState = {
     state: { // data
-        tickets: JSON.parse(localStorage.getItem('tickets')) ?? [
-            {
-                id: 0, 
-                summary: "Я System34 удалил", 
-                status: "Решено", 
-                priority: "ВЫСОКИЙ", 
-                content: "Я дурак", 
-                from: "Max", 
-                create_date: "20.12.2024 18:15:23",
-                update_date: "20.12.2024 18:32:42",
-                answer: "Удалите VSCode"
-            },
-            {
-                id: 1, 
-                summary: " ", 
-                status: "Не решено", 
-                priority: "НИЗКИЙ", 
-                content: " ", 
-                from: "Arina", 
-                create_date: " ",
-                update_date: " ",
-                answer: " "
-            },
-            {
-                id: 2, 
-                summary: " ", 
-                status: "Решено", 
-                priority: "СРЕДНИЙ", 
-                content: " ", 
-                from: "Miranda", 
-                create_date: " ",
-                update_date: " ",
-                answer: " "
-            },
-            {
-                id: 3, 
-                summary: " ", 
-                status: "Не решено", 
-                priority: "ВЫСОКИЙ", 
-                content: "", 
-                from: "Alex", 
-                create_date: " ",
-                update_date: " ",
-                answer: " "
-            },
-            {
-                id: 4, 
-                summary: " ", 
-                status: "Решено", 
-                priority: "СРЕДНИЙ", 
-                content: " ", 
-                from: "Linda", 
-                create_date: " ",
-                update_date: " ",
-                answer: " "
-            }
+        tickets: JSON.parse(localStorage.getItem('tickets')) ?? [ {}
+            // {
+            //     id: 0, 
+            //     summary: "Я System34 удалил", 
+            //     status: "Решено", 
+            //     priority: "ВЫСОКИЙ", 
+            //     content: "Я дурак", 
+            //     from: "Max", 
+            //     create_date: "20.12.2024 18:15:23",
+            //     update_date: "20.12.2024 18:32:42",
+            //     answer: "Удалите VSCode"
+            // },
+            // {
+            //     id: 1, 
+            //     summary: " ", 
+            //     status: "Не решено", 
+            //     priority: "НИЗКИЙ", 
+            //     content: " ", 
+            //     from: "Arina", 
+            //     create_date: " ",
+            //     update_date: " ",
+            //     answer: " "
+            // },
+            // {
+            //     id: 2, 
+            //     summary: " ", 
+            //     status: "Решено", 
+            //     priority: "СРЕДНИЙ", 
+            //     content: " ", 
+            //     from: "Miranda", 
+            //     create_date: " ",
+            //     update_date: " ",
+            //     answer: " "
+            // },
+            // {
+            //     id: 3, 
+            //     summary: " ", 
+            //     status: "Не решено", 
+            //     priority: "ВЫСОКИЙ", 
+            //     content: "", 
+            //     from: "Alex", 
+            //     create_date: " ",
+            //     update_date: " ",
+            //     answer: " "
+            // },
+            // {
+            //     id: 4, 
+            //     summary: " ", 
+            //     status: "Решено", 
+            //     priority: "СРЕДНИЙ", 
+            //     content: " ", 
+            //     from: "Linda", 
+            //     create_date: " ",
+            //     update_date: " ",
+            //     answer: " "
+            // }
             
         ]
     },

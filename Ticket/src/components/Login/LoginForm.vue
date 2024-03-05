@@ -126,11 +126,11 @@ export default {
       }
 
       if (this.password.length < 8) {
-        this.errorsPassword.push('Пароль должеть быть больше 8 символов');
+        this.errorsPassword.push('Пароль должен быть больше 8 символов');
       }
 
       if (this.login.length < 5) {
-        this.errorsLogin.push('Логин должеть быть больше 5 символов');
+        this.errorsLogin.push('Логин должен быть больше 5 символов');
       }
 
       const userData = {
