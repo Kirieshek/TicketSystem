@@ -15,6 +15,10 @@
                         <div class="text-caption ticket-content">
                             {{ ticket.content }}
                         </div>
+                        <br>
+                        <div class="text-caption ticket-content2">
+                            {{ ticket.create_date }}
+                        </div>
                     </div>
 
                     <div class="flex-mg mt-2">
@@ -85,14 +89,19 @@
                     <v-card-text>
                         <i>{{ ticket.content }}</i>
                     </v-card-text>
-                    <br>
+                    <v-card-text v-show="ticket.status == 'Решено'">
+                        ОТВЕТ:
+                    </v-card-text>
+                    <v-card-text class="ticket-UP2">
+                            {{ ticket.answer }}
+                    </v-card-text>
                     <br>
                     <v-card-actions>
                         <v-card-text>
                             <span class="smallText">{{ ticket.from }}</span>
                         </v-card-text>
-                        <v-btn v-if="this.$store.state.user.currentUser.role == 'Администратор'" v-model="dialog2" :color="'green'" class="btn-white ml-2"
-                            @click="dialog2 = true, dialog = false">ОТВЕТИТЬ
+                        <v-btn v-show="this.$store.state.user.currentUser.role == 'Администратор' && ticket.status == 'Не решено'" v-model="dialog2"
+                            :color="'green'" class="btn-white ml-2" @click="dialog2 = true, dialog = false">ОТВЕТИТЬ
                         </v-btn>
                         <v-btn text="ЗАКРЫТЬ" @click="dialog = false" class="button-red"></v-btn>
                     </v-card-actions>
@@ -103,7 +112,7 @@
                     <v-card-text>
                         <b> <span class="bigText ticket-UP">ОТВЕТ</span></b>
                     </v-card-text>
-                    <v-textarea v-model="content" label="Описание проблемы" class="mt-3" />
+                    <v-textarea v-model="answer" label="Описание проблемы" class="mt-3 textareap"/>
                     <div class="box">
                         <div v-if="errorsContent.length" class="errorBox">
                             <span v-for="error in errorsContent" class="error">{{ error }}<br></span>
@@ -114,7 +123,7 @@
                     </div>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn text="ОТПРАВИТЬ" variant="text" @click="validateForm(ticket)" class="button-red"></v-btn>
+                        <v-btn text="ОТПРАВИТЬ" variant="text" @click="validateForm()" class="button-red"></v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -130,31 +139,33 @@ export default {
             dialog: false,
             dialog2: false,
             errorsContent: [],
-            content: '',
+            answer: '',
         }
     },
     props: {
         ticket: Object
     },
     methods: {
-        deleteTicket(id) {
-            this.$store.commit("DELETE_TICKET", id);
+        deleteTicket() {
+            this.$store.commit("DELETE_TICKET", { id: this.ticket.id });
         },
-        validateForm(id) {
-            if (this.content.length < 10) {
+        validateForm() {
+            this.errorsContent = []
+
+            if (this.answer.length < 10) {
                 this.errorsContent.push('Дайте понятный ответ');
             }
 
-            const ticketData = {
-                answer: this.content, 
-                status: 'Решено'  
+            const payload = {
+                answer: this.answer,
+                status: 'Решено',
+                id: this.ticket.id
             }
 
             if (this.errorsContent.length === 0) {
-                this.$store.commit('REPLY_TICKET', ticketData)
+                this.$store.commit('REPLY_TICKET', payload, { id: this.ticket.id })
                 this.dialog2 = false
             }
-
 
         }
     },
@@ -168,12 +179,24 @@ export default {
 <style scoped>
 .margin {
     padding-top: 10px
-}
+}       
 
 .ticket-content {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.ticket-content2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #000;
+}
+
+.ticket-content3 {
+    color: #000;    
+    font-weight: 600;
 }
 
 .flex-mg {
@@ -215,6 +238,10 @@ export default {
     text-transform: uppercase;
 }
 
+.ticket-UP2 {
+    font-weight: 600;
+}
+
 .error {
     color: rgb(124, 28, 28);
     font-size: 12px;
@@ -229,5 +256,4 @@ export default {
     margin-top: -15px;
     text-align: center;
 }
-
 </style>

@@ -1,3 +1,5 @@
+import api from './api'
+
 export const userState = {
     state: { // data
        users: [
@@ -12,11 +14,13 @@ export const userState = {
     },
     mutations: { // methods
         LOGIN(state, payload) {
-           state.users.forEach((user) => {
-                if(user.login == payload.login && user.password == payload.password && user.email == payload.email){
-                    state.currentUser = user;
-                }
-            })
+            //    state.users.forEach((user) => {
+            //         if(user.login == payload.login && user.password == payload.password && user.email == payload.email){
+            //             state.currentUser = user;
+            //         }
+            //     })
+
+
             localStorage.setItem('user', JSON.stringify(state.currentUser))
         },
         LogOut(state) {
@@ -24,4 +28,15 @@ export const userState = {
             localStorage.removeItem('user')
         },
     },
+    actions: {
+        async login({ commit }, payload) {
+            try {
+                const res = await api.post("login", payload);
+                // console.log(res);
+                commit('LOGIN', res.data.user)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
 }

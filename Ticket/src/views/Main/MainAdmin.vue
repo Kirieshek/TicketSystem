@@ -2,16 +2,16 @@
   <v-container>
     <v-row justify="center">
       <v-tabs v-model="tab" color="indigo-darken-3" align-tabs="center">
-        <v-tab :value="1">РЕШЁННЫЕ</v-tab>
-        <v-tab :value="2">НЕ РЕШЁННЫЕ</v-tab>
+        <v-tab :value="1">НЕ РЕШЁННЫЕ</v-tab>
+        <v-tab :value="2">РЕШЁННЫЕ</v-tab>
       </v-tabs>
     </v-row>
     <v-window v-model="tab">
       <v-window-item :value="1">
         <v-container class="ticketloc">
           <v-row class="ticket-pos mt-10">
-            <div v-for="item in ticket" >
-              <TicketCard :ticket="item" v-show="ticket.status == 'Решено'"/>
+            <div v-for="item in tickets" v-show="item.status == 'Не решено'">
+              <TicketCard :ticket="item" />
             </div>
           </v-row>
         </v-container>
@@ -19,8 +19,8 @@
       <v-window-item :value="2">
         <v-container class="ticketloc">
           <v-row class="ticket-pos mt-10">
-            <div v-for="item in ticket">
-              <TicketCard :ticket="item" v-show="ticket.status == 'Не решено'"/>
+            <div v-for="item in tickets" v-show="item.status == 'Решено'">
+              <TicketCard :ticket="item" />
             </div>
           </v-row>
         </v-container>
@@ -42,17 +42,11 @@ export default {
 
   data: () => ({
     tab: 1,
-    summary: '',
-    content: '',
-    priority: '',
   }),
   computed: {
-    ticket(id) {
+    tickets() {
       return this.$store.state.ticket.tickets
     },
-    user() {
-      return this.$store.state.user.currentUser
-    }
   },
   methods: {
     

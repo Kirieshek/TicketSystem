@@ -144,7 +144,8 @@ export default {
         email: this.email
       }
 
-      this.$store.commit('LOGIN', userData)
+      // this.$store.commit('LOGIN', userData)
+      this.$store.dispatch('login', userData)
 
       if (this.errorsLogin.length === 0 && this.errorsPassword.length === 0 && this.errorsEmail.length === 0) {
         if (this.$store.state.user.currentUser === '') {

@@ -67,7 +67,7 @@ export const ticketState = {
             let dateID = Date.now()
             let dateCREATE = new Date
 
-            const newTicket = {
+            const ticket = {
                 id: dateID, 
                 summary: payload.summary, 
                 status: "Не решено", 
@@ -79,7 +79,7 @@ export const ticketState = {
                 answer: ""
             }
 
-            state.tickets.unshift(newTicket);
+            state.tickets.unshift(ticket);
             localStorage.setItem("tickets", JSON.stringify(state.tickets));
         },
         DELETE_TICKET(state, payload){
