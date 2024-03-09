@@ -7,6 +7,7 @@
       <v-sheet width="400" class="mx-auto" v-else>
         <div class="tittle">АВТОРИЗАЦИЯ</div>
         <v-form @submit.prevent>
+
           <v-text-field v-model="login" :rules="rulesLogin" label="Логин" />
           <div class="box">
             <div v-if="errorsLogin.length" class="errorBox">
@@ -16,6 +17,7 @@
               <div class="empty"></div>
             </div>
           </div>
+
           <v-text-field v-model="password" :rules="rulesPassword" label="Пароль" type="password" class="input" />
           <div class="box">
             <div v-if="errorsPassword.length" class="errorBox">
@@ -25,6 +27,7 @@
               <div class="empty"></div>
             </div>
           </div>
+
           <v-text-field v-model="email" :rules="rulesEmail" label="Элекронная почта" type="text" class="input" />
           <div class="box">
             <div v-if="errorsEmail.length" class="errorBox">
@@ -34,6 +37,7 @@
               <div class="empty"></div>
             </div>
           </div>
+
           <v-text-field v-model="town" label="Город (необязательно)" type="text" class="input" />
           <v-btn @click="validateForm" type="submit" class="mt-2" block>ВОЙТИ</v-btn>
           <div class="box2">
@@ -44,6 +48,7 @@
               <div class="empty"></div>
             </div>
           </div>
+          
           <v-row align="center" justify="center">
             <v-col v-for="(variant, i) in variants" :key="i" cols="auto">
               <v-card class="mx-auto, mt-5" width="400" :color="color" :variant="variant">

@@ -167,8 +167,8 @@ export default {
           this.errorsSummary.push('Название не должно содержать цифры');
         }
 
-        if (this.summary.length < 8) {
-          this.errorsSummary.push('Название должно быть больше 8 символов');
+        if (this.summary.length < 5) {
+          this.errorsSummary.push('Название должно быть больше 5 символов');
         }
 
         if (this.content.length < 20) {
@@ -185,7 +185,7 @@ export default {
             content: this.content,
             priority: this.priority,
             from: this.user.fullname,
-            status: 'UNDONE',
+            status: 'Не решено',
             create_date: new Date().toLocaleString(),
           });
 
@@ -198,7 +198,7 @@ export default {
   }
 </script>
 
-<style>
+<style scoped>
 .ticket-pos {
   display: flex;
   align-items: center;

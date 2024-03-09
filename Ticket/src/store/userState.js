@@ -6,6 +6,7 @@ export const userState = {
         {id: 2, fullname: "Анатосян Наталья Викторовна", login: "cheater12345", password: "77777777", email: "natasha@mail.ru", city: "Обосранск", role: "Пользователь"},
         {id: 3, fullname: "Барак Хуссейн Обама", login: "blackman", password: "iamnegrochek", email: "presidentofworld@rambler.ru", city: "Вашингтон", role: "Пользователь"},
         {id: 4, fullname: "Иван Иванов Иванович", login: "IVANchel", password: "ivanchelo", email: "ivan@mail.ru", city: "Иваново", role: "Пользователь"},
+        {id: 5, fullname: "Бета-Тестер", login: "user@user1", password: "user@user1", email: "user@user1", city: "Неизвестно", role: "Пользователь"},
        ],
        currentUser: JSON.parse(localStorage.getItem('user')) ?? '',
     },
