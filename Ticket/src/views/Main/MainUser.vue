@@ -100,7 +100,9 @@ export default {
   components: {
     TicketCard
   },
-
+  mounted(){
+    this.$store.dispatch('getUserTickets', this.user.login)
+  },
   data: () => ({
     tab: 1,
     summary: '',
@@ -112,7 +114,7 @@ export default {
   }),
   computed: {
     ticket() {
-      return this.$store.state.ticket.tickets
+      return this.$store.state.ticket.tickets.toReversed()
     },
     user() {
       return this.$store.state.user.currentUser
@@ -180,22 +182,21 @@ export default {
         }
 
         if (this.errorsSummary.length === 0 && this.errorsContent.length === 0 && this.errorsPriority.length === 0) {
-          this.$store.commit("ADD_TICKET", {
+          const newTicket = {
             summary: this.summary,
             content: this.content,
             priority: this.priority,
-            from: this.user.fullname,
-            status: 'Не решено',
-            create_date: new Date().toLocaleString(),
-          });
+            from: this.user.login,
+          }
+            this.$store.dispatch('addTicket', newTicket)
+          }
 
           this.summary = '';
           this.content = '';
           this.priority = '';
         }
       }
-    },
-  }
+    }
 </script>
 
 <style scoped>

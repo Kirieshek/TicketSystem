@@ -39,7 +39,15 @@
           </div>
 
           <v-text-field v-model="town" label="Город (необязательно)" type="text" class="input" />
-          <v-btn @click="validateForm" type="submit" class="mt-2" block>ВОЙТИ</v-btn>
+          <v-btn @click="validateForm" v-if="!loading" type="submit" class="mt-2" block>ВОЙТИ</v-btn>
+          <v-btn v-if="loading" type="submit" disabled class="mt-2" block>
+            <v-progress-circular
+              color="primary"
+              indeterminate="disable-shrink"
+              size="16"
+              width="2"
+            ></v-progress-circular>
+          </v-btn>
           <div class="box2">
             <div v-if="errorsAuth.length" class="errorBox">
               <span v-for="error in errorsAuth" class="error">{{ error }}<br></span>
@@ -48,7 +56,7 @@
               <div class="empty"></div>
             </div>
           </div>
-          
+
           <v-row align="center" justify="center">
             <v-col v-for="(variant, i) in variants" :key="i" cols="auto">
               <v-card class="mx-auto, mt-5" width="400" :color="color" :variant="variant">
@@ -68,7 +76,7 @@
     </div>
   </div>
 </template>
-  
+
 <script>
 
 export default {
@@ -90,6 +98,7 @@ export default {
     errorsPassword: [],
     errorsEmail: [],
     errorsAuth: [],
+    loading: false,
 
     // rulesLogin: [
     //   value => {
@@ -119,25 +128,29 @@ export default {
     // ],
   }),
   methods: {
-    validateForm() {
+    async validateForm() {
 
+      this.loading = true;
       this.errorsEmail = [];
       this.errorsPassword = [];
       this.errorsLogin = [];
       this.errorsAuth = [];
 
       if (!this.email.includes('@') || this.email.length < 3) {
+        setTimeout(() => this.loading = false, 5000);
         this.errorsEmail.push('Неправильный синтаксис электронной почты');
       }
 
       if (this.password.length < 1) {
+        setTimeout(() => this.loading = false, 5000);
         this.errorsPassword.push('Пароль должен быть больше 8 символов');
       }
 
       if (this.login.length < 1) {
+        setTimeout(() => this.loading = false, 5000);
         this.errorsLogin.push('Логин должен быть больше 5 символов');
       }
-      
+
       const userData = {
         login: this.login,
         password: this.password,
@@ -145,7 +158,12 @@ export default {
       }
 
       // this.$store.commit('LOGIN', userData)
-      this.$store.dispatch('login', userData)
+
+
+      let res = await this.$store.dispatch('login', userData)
+      if (res){
+        setTimeout(() => this.loading = false, 5000);
+      }
 
       if (this.errorsLogin.length === 0 && this.errorsPassword.length === 0 && this.errorsEmail.length === 0) {
         if (this.$store.state.user.currentUser === '') {
@@ -155,6 +173,8 @@ export default {
           this.$router.push('/profile');
         }
       }
+
+      setTimeout(() => this.loading = false, 1);
     }
   }
 }
@@ -244,4 +264,3 @@ body {
   margin-bottom: 10px;
 }
 </style>
-  

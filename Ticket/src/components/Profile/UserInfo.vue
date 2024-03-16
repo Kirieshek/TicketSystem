@@ -52,7 +52,7 @@
             Роль:
           </div>
           <div class="smallText">
-            {{ this.user.type }}
+            {{ this.user.user_type }}
           </div>
         </div>
         <div class="btn-group">
