@@ -28,15 +28,15 @@
             </div>
           </div>
 
-          <v-text-field v-model="email" :rules="rulesEmail" label="Элекронная почта" type="text" class="input" />
-          <div class="box">
+          <v-text-field v-model="email" :rules="rulesEmail" label="Элекронная почта (необязательно)" type="text" class="input" />
+          <!-- <div class="box">
             <div v-if="errorsEmail.length" class="errorBox">
               <span v-for="error in errorsEmail" class="error">{{ error }}<br></span>
             </div>
             <div v-if="!errorsEmail.length">
               <div class="empty"></div>
             </div>
-          </div>
+          </div> -->
 
           <v-text-field v-model="town" label="Город (необязательно)" type="text" class="input" />
           <v-btn @click="validateForm" v-if="!loading" type="submit" class="mt-2" block>ВОЙТИ</v-btn>
@@ -96,7 +96,7 @@ export default {
     password: '',
     errorsLogin: [],
     errorsPassword: [],
-    errorsEmail: [],
+    // errorsEmail: [],
     errorsAuth: [],
     loading: false,
 
@@ -131,24 +131,24 @@ export default {
     async validateForm() {
 
       this.loading = true;
-      this.errorsEmail = [];
+      // this.errorsEmail = [];
       this.errorsPassword = [];
       this.errorsLogin = [];
       this.errorsAuth = [];
 
-      if (!this.email.includes('@') || this.email.length < 3) {
+      // if (!this.email.includes('@') || this.email.length < 3) {
+      //   setTimeout(() => this.loading = false, 5000);
+      //   this.errorsEmail.push('Неправильный синтаксис электронной почты');
+      // }
+
+      if (this.password.length < 3) {
         setTimeout(() => this.loading = false, 5000);
-        this.errorsEmail.push('Неправильный синтаксис электронной почты');
+        this.errorsPassword.push('Пароль должен быть больше 2 символов');
       }
 
-      if (this.password.length < 1) {
+      if (this.login.length < 3) {
         setTimeout(() => this.loading = false, 5000);
-        this.errorsPassword.push('Пароль должен быть больше 8 символов');
-      }
-
-      if (this.login.length < 1) {
-        setTimeout(() => this.loading = false, 5000);
-        this.errorsLogin.push('Логин должен быть больше 5 символов');
+        this.errorsLogin.push('Логин должен быть больше 2 символов');
       }
 
       const userData = {
@@ -165,7 +165,7 @@ export default {
         setTimeout(() => this.loading = false, 5000);
       }
 
-      if (this.errorsLogin.length === 0 && this.errorsPassword.length === 0 && this.errorsEmail.length === 0) {
+      if (this.errorsLogin.length === 0 && this.errorsPassword.length === 0) {
         if (this.$store.state.user.currentUser === '') {
           this.errorsAuth.push('Аккаунт не существует');
         }
@@ -259,6 +259,37 @@ body {
 .box2 {
   margin-top: 10px;
 }
+
+.card{ 
+    animation: fade-in 1s ease-in-out; 
+} 
+
+@keyframes fade-in { 
+    from { 
+      opacity: 0; 
+      transform: translateX(-50px); 
+    } 
+ 
+    to { 
+      opacity: 1; 
+      transform: translateX(0); 
+    } 
+  } 
+
+ 
+  @keyframes pulse { 
+    0% { 
+      transform: scale(1); 
+    } 
+ 
+    50% { 
+      transform: scale(1.1); 
+    } 
+ 
+    100% { 
+      transform: scale(1); 
+    } 
+  } 
 
 .submit {
   margin-bottom: 10px;

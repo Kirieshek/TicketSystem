@@ -2,7 +2,7 @@
     <div>
         <div class="hide">
             <v-card variant="outlined" class="mx-auto margin card-di"
-                :color="ticket.priority == 'HIGH' ? 'red' : ticket.priority == 'MED' ? 'rgb(255, 175, 25)' : 'green'">
+                :color="ticket.priority == 'ВЫСОКИЙ' ? 'red' : ticket.priority == 'СРЕДНИЙ' ? 'rgb(255, 175, 25)' : 'green'">
                 {{ ticket.priority }}
                 <v-card-item>
                     <div>
@@ -23,7 +23,7 @@
 
                     <div class="flex-mg mt-2">
                         <v-btn
-                            :color="ticket.priority == 'HIGH' ? 'red' : ticket.priority == 'MED' ? 'rgb(255, 175, 25)' : 'green'"
+                            :color="ticket.priority == 'ВЫСОКИЙ' ? 'red' : ticket.priority == 'СРЕДНИЙ' ? 'rgb(255, 175, 25)' : 'green'"
                             @click="dialog = true" class="btn-white">ПОДРОБНЕЕ
                         </v-btn>
 
@@ -147,7 +147,8 @@ export default {
     },
     methods: {
         deleteTicket() {
-            this.$store.commit("DELETE_TICKET", { id: this.ticket.id });
+            // this.$store.commit("DELETE_TICKET", { id: this.ticket.id });
+            this.$store.dispatch('deleteTicket', {id: this.ticket.id})
         },
         validateForm() {
             this.errorsContent = []
@@ -158,7 +159,7 @@ export default {
 
             const payload = {
                 answ: this.answ,
-                status: 'Решено',
+                status: 'Done',
                 id: this.ticket.id
             }
 
@@ -257,4 +258,34 @@ export default {
     margin-top: -15px;
     text-align: center;
 }
+
+.hide{ 
+    animation: fade-in 1s ease-in-out; 
+} 
+
+@keyframes fade-in { 
+    from { 
+      opacity: 0; 
+      transform: translateX(-50px); 
+    } 
+ 
+    to { 
+      opacity: 1; 
+      transform: translateX(0); 
+    } 
+  } 
+ 
+  @keyframes pulse { 
+    0% { 
+      transform: scale(1); 
+    } 
+ 
+    50% { 
+      transform: scale(1.1); 
+    } 
+ 
+    100% { 
+      transform: scale(1); 
+    } 
+  } 
 </style>

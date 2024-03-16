@@ -63,9 +63,89 @@
         ВЫ НЕ АВТОРИЗОВАНЫ
       </div>
     </div>
+    <div class="plan" v-if="this.user != ''">
+      <v-container style="max-width: 500px" class="re">
+        <div class="up">
+          <v-text-field v-model="newTask" label="Что вам нужно сделать?" class="ior" variant="solo"
+            @keydown.enter="create">
+            <template v-slot:append-inner>
+              <v-fade-transition>
+                <v-btn v-show="newTask" icon="mdi-plus-circle" variant="text" @click="create"></v-btn>
+              </v-fade-transition>
+            </template>
+          </v-text-field>
+        </div>
+
+        <div class="down">
+          <h2 class="text-h4 text-success ps-4 mt-10">
+            Задания:&nbsp;
+            <v-fade-transition leave-absolute>
+              <span :key="`tasks-${tasks.length}`">
+                {{ tasks.length }}
+              </span>
+            </v-fade-transition>
+          </h2>
+
+          <v-divider class="mt-4"></v-divider>
+
+          <v-row align="center" class="my-1">
+            <strong class="mx-4 text-info-darken-2">
+              Осталось: {{ remainingTasks }}
+            </strong>
+
+            <v-divider vertical></v-divider>
+
+            <strong class="mx-4 text-success-darken-2">
+              Сделано: {{ completedTasks }}
+            </strong>
+
+            <v-spacer></v-spacer>
+
+            <v-progress-circular v-model="progress" class="me-2"></v-progress-circular>
+          </v-row>
+
+          <v-divider class="mb-4"></v-divider>
+
+          <v-card v-if="tasks.length > 0">
+            <v-slide-y-transition class="py-0" tag="v-list" group>
+              <template v-for="(task, i) in tasks" :key="`${i}-${task.text}`">
+                <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
+
+                <v-list-item @click="task.done = !task.done">
+                  <template v-slot:prepend>
+                    <v-checkbox-btn v-model="task.done" color="grey"></v-checkbox-btn>
+                  </template>
+
+                  <v-list-item-title>
+                    <span :class="task.done ? 'text-grey' : 'text-primary'">{{ task.text }}</span>
+                  </v-list-item-title>
+
+                  <template v-slot:append>
+                    <v-expand-x-transition>
+                      <v-icon v-if="task.done" color="success">
+                        mdi-check
+                      </v-icon>
+                    </v-expand-x-transition>
+                  </template>
+                </v-list-item>
+              </template>
+            </v-slide-y-transition>
+          </v-card>
+          <div class="box2">
+            <div v-if="errorsAuth.length" class="errorBox">
+              <span v-for="error in errorsAuth" class="error">{{ error }}<br></span>
+            </div>
+            <div v-if="!errorsAuth.length">
+              <div class="empty"></div>
+            </div>
+          </div>
+        </div>
+      </v-container>
+    </div>
   </div>
+
 </template>
-  
+
 <script>
 
 export default {
@@ -75,18 +155,46 @@ export default {
   },
 
   data: () => ({
-    //
+    tasks: [],
+    newTask: null,
+    errorsAuth: '',
   }),
   computed: {
     user() {
       return this.$store.state.user.currentUser
-    }
+    },
+    completedTasks() {
+      return this.tasks.filter(task => task.done).length
+    },
+    progress() {
+      return this.completedTasks / this.tasks.length * 100
+    },
+    remainingTasks() {
+      return this.tasks.length - this.completedTasks
+    },
   },
   methods: {
     LogOut() {
       this.$store.commit('LogOut');
       this.$router.push('/login');
-    }
+    },
+    create() {
+      this.errorsAuth = [];
+
+      if (this.tasks.length < 8) {
+        this.tasks.push({
+          done: false,
+          text: this.newTask,
+        })
+      }
+      else {
+        this.errorsAuth.push('Максимум заданий - 8');
+
+        return 
+      }
+
+      this.newTask = null
+    },
   }
 }
 </script>
@@ -98,8 +206,8 @@ export default {
   max-height: 700px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  justify-content: space-evenly;
+  flex-direction: row;
   margin-top: 10px;
 }
 
@@ -112,6 +220,49 @@ export default {
   flex-direction: column;
   box-shadow: 1px 1px 10px rgb(189, 189, 189);
   margin-top: 60px;
+}
+
+.error {
+  color: rgb(124, 28, 28);
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+.empty {
+  height: 24px;
+}
+
+.box {
+  margin-top: -15px;
+}
+
+.box2 {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.plan {
+  height: 630px;
+  width: 450px;
+  display: flex;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.up {
+  position: fixed;
+  top: 150px;
+}
+
+.down {
+  position: fixed;
+  top: 190px;
+  width: 420px;
+
+}
+
+.ior {
+  width: 420px;
 }
 
 .bigText {
@@ -182,7 +333,7 @@ export default {
 
 .btn-group {
   color: rgb(124, 28, 28);
-  margin-top: 40px;
+  margin-top: 90px;
   font-size: 14px;
 }
 
@@ -194,5 +345,34 @@ export default {
   font-weight: 600;
   font-size: 20px;
 }
+
+.card, .up, .down{ 
+    animation: fade-in 1s ease-in-out; 
+} 
+
+@keyframes fade-in { 
+    from { 
+      opacity: 0; 
+      transform: translateX(-50px); 
+    } 
+ 
+    to { 
+      opacity: 1; 
+      transform: translateX(0); 
+    } 
+  } 
+ 
+  @keyframes pulse { 
+    0% { 
+      transform: scale(1); 
+    } 
+ 
+    50% { 
+      transform: scale(1.1); 
+    } 
+ 
+    100% { 
+      transform: scale(1); 
+    } 
+  } 
 </style>
-  

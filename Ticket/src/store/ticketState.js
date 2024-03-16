@@ -152,6 +152,15 @@ export const ticketState = {
             } catch (error) {
                 console.log(error)
             }
+        },
+        async deleteTicket({ commit }, { id, ticketData }) {
+            try {
+                await api.delete("ticket/" + id, ticketData);
+
+                commit('DELETE_TICKET', { id, ticketData })
+            } catch (error) {
+                console.log(error)
+            }
         }
     },
     modules: { // modules

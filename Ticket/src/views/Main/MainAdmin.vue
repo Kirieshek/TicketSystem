@@ -2,7 +2,7 @@
   <v-container>
     <v-row justify="center">
       <v-tabs v-model="tab" color="indigo-darken-3" align-tabs="center">
-        <v-tab :value="1">НЕ РЕШЁННЫЕ</v-tab>
+        <v-tab :value="1">ОТКРЫТЫЕ</v-tab>
         <v-tab :value="2">РЕШЁННЫЕ</v-tab>
       </v-tabs>
     </v-row>
@@ -10,7 +10,7 @@
       <v-window-item :value="1">
         <v-container class="ticketloc">
           <v-row class="ticket-pos mt-10">
-            <div class="hide" v-if="loading" v-for="item in 10">
+            <div class="hide" v-if="loading" v-for="item in 20">
               <v-skeleton-loader
               class="border skeleton"  
               width="390" 
@@ -27,7 +27,7 @@
       <v-window-item :value="2">
         <v-container class="ticketloc">
           <v-row class="ticket-pos mt-10">
-            <div class="hide"  v-if="loading" v-for="item in 10">
+            <div class="hide" v-if="loading" v-for="item in 20">
               <v-skeleton-loader
               class="border skeleton"  
               width="390" 
@@ -58,7 +58,9 @@ export default {
   async mounted() {
     this.loading = true
     const res = await this.$store.dispatch('getAllTickets')
-    if (res) this.loading = false
+    if (res){
+      setTimeout(() => this.loading = false, 2000);
+    }
   },
   data: () => ({
     tab: 1,
@@ -75,7 +77,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .ticket-pos {
   display: flex;
   align-items: center;
@@ -101,6 +103,37 @@ export default {
     display: flex;
     flex-direction: column;
 }
+
+.hide{ 
+    animation: fade-in 1s ease-in-out; 
+} 
+
+@keyframes fade-in { 
+    from { 
+      opacity: 0; 
+      transform: translateX(-50px); 
+    } 
+ 
+    to { 
+      opacity: 1; 
+      transform: translateX(0); 
+    } 
+  } 
+
+ 
+  @keyframes pulse { 
+    0% { 
+      transform: scale(1); 
+    } 
+ 
+    50% { 
+      transform: scale(1.1); 
+    } 
+ 
+    100% { 
+      transform: scale(1); 
+    } 
+  } 
 
 .textB {
   font-size: 20px;
