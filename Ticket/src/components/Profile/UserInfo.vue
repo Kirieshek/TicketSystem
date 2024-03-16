@@ -19,7 +19,7 @@
               ФИО:
             </div>
             <div class="smallText">
-              {{ this.user.fullname }}
+              {{ this.user.full_name }}
             </div>
           </div>
           <div class="short">
@@ -39,20 +39,20 @@
             {{ this.user.email }}
           </div>
         </div>
-        <div class="city">
+        <!-- <div class="city">
           <div class="bigText">
             Город:
           </div>
           <div class="smallText">
             {{ this.user.city }}
           </div>
-        </div>
+        </div> -->
         <div class="status">
           <div class="bigText">
             Роль:
           </div>
           <div class="smallText">
-            {{ this.user.role }}
+            {{ this.user.type }}
           </div>
         </div>
         <div class="btn-group">

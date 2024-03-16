@@ -3,12 +3,12 @@ import api from './api'
 export const userState = {
     state: { // data
        users: [
-        {id: 0, fullname: "Бета-Тестер", login: "user@user", password: "user@user", email: "user@user", city: "Неизвестно", role: "Администратор"},
-        {id: 1, fullname: "Исаев Кирилл Валерьевич", login: "emibanso", password: "Tmk131415tmk", email: "isaevkirill0@gmail.com", city: "Краснодар", role: "Администратор"},
-        {id: 2, fullname: "Анатосян Наталья Викторовна", login: "cheater12345", password: "77777777", email: "natasha@mail.ru", city: "Обосранск", role: "Пользователь"},
-        {id: 3, fullname: "Барак Хуссейн Обама", login: "blackman", password: "iamnegrochek", email: "presidentofworld@rambler.ru", city: "Вашингтон", role: "Пользователь"},
-        {id: 4, fullname: "Иван Иванов Иванович", login: "IVANchel", password: "ivanchelo", email: "ivan@mail.ru", city: "Иваново", role: "Пользователь"},
-        {id: 5, fullname: "Бета-Тестер", login: "user@user1", password: "user@user1", email: "user@user1", city: "Неизвестно", role: "Пользователь"},
+        {id: 0, full_name: "Бета-Тестер", login: "user@user", password: "user@user", email: "user@user", city: "Неизвестно", type: "Администратор"},
+        {id: 1, full_name: "Исаев Кирилл Валерьевич", login: "emibanso", password: "Tmk131415tmk", email: "isaevkirill0@gmail.com", city: "Краснодар", type: "Администратор"},
+        {id: 2, full_name: "Анатосян Наталья Викторовна", login: "cheater12345", password: "77777777", email: "natasha@mail.ru", city: "Обосранск", type: "Пользователь"},
+        {id: 3, full_name: "Барак Хуссейн Обама", login: "blackman", password: "iamnegrochek", email: "presidentofworld@rambler.ru", city: "Вашингтон", type: "Пользователь"},
+        {id: 4, full_name: "Иван Иванов Иванович", login: "IVANchel", password: "ivanchelo", email: "ivan@mail.ru", city: "Иваново", type: "Пользователь"},
+        {id: 5, full_name: "Бета-Тестер", login: "user@user1", password: "user@user1", email: "user@user1", city: "Неизвестно", type: "Пользователь"},
        ],
        currentUser: JSON.parse(localStorage.getItem('user')) ?? '',
     },

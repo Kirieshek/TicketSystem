@@ -130,14 +130,14 @@ export default {
         this.errorsEmail.push('Неправильный синтаксис электронной почты');
       }
 
-      if (this.password.length < 8) {
+      if (this.password.length < 1) {
         this.errorsPassword.push('Пароль должен быть больше 8 символов');
       }
 
-      if (this.login.length < 5) {
+      if (this.login.length < 1) {
         this.errorsLogin.push('Логин должен быть больше 5 символов');
       }
-
+      
       const userData = {
         login: this.login,
         password: this.password,

@@ -64,7 +64,7 @@
         <v-container class="ticketloc">
           <v-row class="ticket-pos mt-10">
             <div v-for="item in ticket">
-              <TicketCard :ticket="item" v-show="item.from == user.fullname" />
+              <TicketCard :ticket="item" v-show="item.from == user.full_name" />
               <!-- <div class="tickets">
                 <div class="ticket">
                 <p><b class="textB">Тема:</b> {{ item.summary }}</p>

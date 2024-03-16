@@ -93,14 +93,14 @@
                         ОТВЕТ:
                     </v-card-text>
                     <v-card-text class="ticket-UP2">
-                            {{ ticket.answer }}
+                            {{ ticket.answ }}
                     </v-card-text>
                     <br>
                     <v-card-actions>
                         <v-card-text>
                             <span class="smallText">{{ ticket.from }}</span>
                         </v-card-text>
-                        <v-btn v-show="this.$store.state.user.currentUser.role == 'Администратор' && ticket.status == 'Не решено'" v-model="dialog2"
+                        <v-btn v-show="this.$store.state.user.currentUser.type == 'Администратор' && ticket.status == 'Не решено'" v-model="dialog2"
                             :color="'green'" class="btn-white ml-2" @click="dialog2 = true, dialog = false">ОТВЕТИТЬ
                         </v-btn>
                         <v-btn text="ЗАКРЫТЬ" @click="dialog = false" class="button-red"></v-btn>
@@ -157,7 +157,7 @@ export default {
             }
 
             const payload = {
-                answer: this.answer,
+                answ: this.answer,
                 status: 'Решено',
                 id: this.ticket.id
             }

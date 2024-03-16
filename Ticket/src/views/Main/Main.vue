@@ -12,8 +12,8 @@
     </div>
   </div> -->
 
-  <MainAdmin v-if="user.role == 'Администратор'" />
-  <MainUser v-if="user.role == 'Пользователь'" />
+  <MainAdmin v-if="user.type == 'Администратор'" />
+  <MainUser v-if="user.type == 'Пользователь'" />
 </template>
   
 <script>

@@ -76,7 +76,7 @@ export const ticketState = {
                 from: payload.from, 
                 create_date: dateCREATE.toLocaleString(),
                 update_date: "",
-                answer: ""
+                answ: ""
             }
 
             state.tickets.unshift(ticket);
@@ -98,7 +98,7 @@ export const ticketState = {
 
                     let update_date = date.toLocaleString()
 
-                    ticket.answer = payload.answer;
+                    ticket.answ = payload.answer;
                     ticket.status = payload.status;
                     ticket.update_date = update_date;
                 }
