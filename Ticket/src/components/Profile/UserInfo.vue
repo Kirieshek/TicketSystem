@@ -56,13 +56,73 @@
           </div>
         </div>
         <div class="btn-group">
-          <button @click="LogOut">Выйти</button>
+          <button @click="Open" class="btn2">Редактировать</button>
+          <button @click="LogOut" class="btn1">Выйти</button>
         </div>
       </div>
       <div v-else class="error">
         ВЫ НЕ АВТОРИЗОВАНЫ
       </div>
     </div>
+
+    <template>
+      <div class="pa-4 text-center">
+        <v-dialog v-model="dialog" max-width="480">
+          <v-card>
+            <v-card-text>
+              <b> <span class="bigText ticket-UP">РЕДАКТИРОВАНИЕ</span></b>
+            </v-card-text>
+            <v-form @submit.prevent class="into">
+              <v-sheet width="400" class="form">
+                <v-text-field v-model="fullname" label="Имя пользователя" />
+                <div class="box">
+                  <div v-if="errorsName.length" class="errorBox">
+                    <span v-for="error in errorsName" class="error">{{ error }}<br></span>
+                  </div>
+                  <div v-if="!errorsName.length">
+                    <div class="empty"></div>
+                  </div>
+                </div>
+
+                <v-text-field v-model="password" label="Пароль" type="password" class="input" />
+                <div class="box">
+                  <div v-if="errorsPassword.length" class="errorBox">
+                    <span v-for="error in errorsPassword" class="error">{{ error }}<br></span>
+                  </div>
+                  <div v-if="!errorsPassword.length">
+                    <div class="empty"></div>
+                  </div>
+                </div>
+
+                <v-text-field v-model="email" label="Элекронная почта" type="text" class="input" />
+                <div class="box">
+                  <div v-if="errorsEmail.length" class="errorBox">
+                    <span v-for="error in errorsEmail" class="error">{{ error }}<br></span>
+                  </div>
+                  <div v-if="!errorsEmail.length">
+                    <div class="empty"></div>
+                  </div>
+                </div>
+
+                <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn text="ИЗМЕНИТЬ" variant="text" @click="Edit()" class="button-red mt-my"></v-btn>
+                    </v-card-actions>
+              </v-sheet>
+
+
+            </v-form>
+          </v-card>
+        </v-dialog>
+
+      </div>
+    </template>
+
+
+
+
+
+
     <div class="plan" v-if="this.user != ''">
       <v-container style="max-width: 500px" class="re">
         <div class="up">
@@ -151,13 +211,21 @@
 export default {
   name: 'UserInfo',
 
-  components: {
+  props: {
+    currentUser: Object
   },
 
   data: () => ({
     tasks: [],
     newTask: null,
     errorsAuth: '',
+    dialog: false,
+    errorsEmail: '',
+    errorsPassword: '',
+    errorsName: '',
+    email: '',
+    password: '',
+    fullname: '',
   }),
   computed: {
     user() {
@@ -190,11 +258,41 @@ export default {
       else {
         this.errorsAuth.push('Максимум заданий - 8');
 
-        return 
+        return
       }
 
       this.newTask = null
     },
+    Open() {
+      this.dialog = !this.dialog
+    },
+    Edit() {
+      this.errorsEmail = [],
+      this.errorsPassword = [],
+      this.errorsName = []
+
+      // if (this.answ.length < 10) {
+      //     this.errorsContent.push('Дайте понятный ответ');
+      // }
+
+      const payload = {
+        email: this.email,
+        password: this.password,
+        full_name: this.fullname,
+        id: this.user.id
+      }
+
+      // if (this.errorsContent.length === 0) {
+      //     // this.$store.commit('REPLY_TICKET', payload, { id: this.ticket.id })
+      //     this.$store.dispatch('updateTicket', {id: this.ticket.id, ticketData: payload})
+      //     this.dialog2 = false
+      // }
+
+      this.$store.dispatch('updateProfile', { id: this.user.id, userData: payload })
+      this.dialog = false
+
+
+    }
   }
 }
 </script>
@@ -208,6 +306,12 @@ export default {
   align-items: center;
   justify-content: space-evenly;
   flex-direction: row;
+  margin-top: 10px;
+}
+
+.into{
+  display: flex;
+  justify-content: center;
   margin-top: 10px;
 }
 
@@ -230,6 +334,10 @@ export default {
 
 .empty {
   height: 24px;
+}
+
+.mt-my{
+  margin-top: -20px;
 }
 
 .box {
@@ -332,9 +440,18 @@ export default {
 }
 
 .btn-group {
-  color: rgb(124, 28, 28);
   margin-top: 90px;
   font-size: 14px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn1 {
+  color: rgb(124, 28, 28);
+}
+
+.btn2 {
+  color: rgb(27, 139, 23);
 }
 
 .error {
@@ -346,33 +463,35 @@ export default {
   font-size: 20px;
 }
 
-.card, .up, .down{ 
-    animation: fade-in 1s ease-in-out; 
-} 
+.card,
+.up,
+.down {
+  animation: fade-in 1s ease-in-out;
+}
 
-@keyframes fade-in { 
-    from { 
-      opacity: 0; 
-      transform: translateX(-50px); 
-    } 
- 
-    to { 
-      opacity: 1; 
-      transform: translateX(0); 
-    } 
-  } 
- 
-  @keyframes pulse { 
-    0% { 
-      transform: scale(1); 
-    } 
- 
-    50% { 
-      transform: scale(1.1); 
-    } 
- 
-    100% { 
-      transform: scale(1); 
-    } 
-  } 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
 </style>

@@ -17,7 +17,7 @@
                         </div>
                         <br>
                         <div class="text-caption ticket-content2">
-                            {{ ticket.create_date }}
+                            {{ localeDate }}
                         </div>
                     </div>
 
@@ -172,9 +172,10 @@ export default {
         }
     },
     computed: {
-
+        localeDate() {
+            return (new Date(this.ticket.create_date)).toLocaleString() 
     },
-
+}
 }
 </script>
 

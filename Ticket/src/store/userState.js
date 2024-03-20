@@ -27,6 +27,14 @@ export const userState = {
             state.currentUser = '';
             localStorage.removeItem('user')
         },
+        EDIT_PROFILE(state, payload) {
+                if (state.user.id == payload.userData.id) {
+                    state.user.email = payload.userData.email;
+                    state.user.password = payload.userData.password;
+                    state.user.full_name = payload.userData.full_name;
+                }
+            
+        },
     },
     actions: {
         async login({ commit }, payload) {
@@ -38,6 +46,14 @@ export const userState = {
             } catch (error) {
                 console.log(error)
             }
-        }
+        },
+        async updateProfile({ commit }, { id, userData }) {
+            try {
+                const res = await api.put("user/" + id, userData);
+                commit('EDIT_PROFILE', { id, userData })
+            } catch (error) {
+                console.log(error)
+            }
+        },
     }
 } 
