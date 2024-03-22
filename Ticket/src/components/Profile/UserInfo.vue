@@ -241,6 +241,9 @@ export default {
       return this.tasks.length - this.completedTasks
     },
   },
+  async mounted() {
+    await this.$store.dispatch('setProfile', { id: this.user.id })
+  },
   methods: {
     LogOut() {
       this.$store.commit('LogOut');
@@ -266,7 +269,7 @@ export default {
     Open() {
       this.dialog = !this.dialog
     },
-    Edit() {
+    async Edit() {
       this.errorsEmail = [],
       this.errorsPassword = [],
       this.errorsName = []
@@ -289,6 +292,7 @@ export default {
       // }
 
       this.$store.dispatch('updateProfile', { id: this.user.id, userData: payload })
+      await this.$store.dispatch('setProfile', { id: this.user.id })
       this.dialog = false
 
 

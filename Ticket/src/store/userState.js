@@ -47,13 +47,24 @@ export const userState = {
                 console.log(error)
             }
         },
+        async setProfile({ commit }, id) {
+            try {
+                const res = await api.get("user/" + id);
+                commit('LOGIN', res.data.user)
+                return res.data.user    
+            } catch (error) {
+                console.log(error)
+            }
+        },  
         async updateProfile({ commit }, { id, userData }) {
             try {
                 const res = await api.put("user/" + id, userData);
                 commit('EDIT_PROFILE', { id, userData })
+                console.log(userData)
+                return res.data.user    
             } catch (error) {
                 console.log(error)
             }
-        },
+        },  
     }
 } 
