@@ -105,9 +105,9 @@
                 </div>
 
                 <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn text="ИЗМЕНИТЬ" variant="text" @click="Edit()" class="button-red mt-my"></v-btn>
-                    </v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn text="ИЗМЕНИТЬ" variant="text" @click="Edit()" class="button-red mt-my"></v-btn>
+                </v-card-actions>
               </v-sheet>
 
 
@@ -271,8 +271,8 @@ export default {
     },
     async Edit() {
       this.errorsEmail = [],
-      this.errorsPassword = [],
-      this.errorsName = []
+        this.errorsPassword = [],
+        this.errorsName = []
 
       // if (this.answ.length < 10) {
       //     this.errorsContent.push('Дайте понятный ответ');
@@ -291,9 +291,25 @@ export default {
       //     this.dialog2 = false
       // }
 
-      this.$store.dispatch('updateProfile', { id: this.user.id, userData: payload })
-      await this.$store.dispatch('setProfile', { id: this.user.id })
-      this.dialog = false
+      if (!this.email.includes('@') || this.email.length < 3) {
+        this.errorsEmail.push('Неправильный синтаксис');
+      }
+
+      if (this.password.length < 3) {
+        this.errorsPassword.push('Очень короткий пароль');
+      }
+
+      if (this.fullname.length < 3) {
+        this.errorsName.push('Очень короткий никнейм');
+      }
+
+      if (this.errorsEmail.length === 0 || this.errorsPassword.length === 0 || this.errorsName.length === 0) {
+        this.$store.dispatch('updateProfile', { id: this.user.id, userData: payload })
+        await this.$store.dispatch('setProfile', { id: this.user.id })
+        this.dialog = false
+      }
+
+
 
 
     }
@@ -313,7 +329,7 @@ export default {
   margin-top: 10px;
 }
 
-.into{
+.into {
   display: flex;
   justify-content: center;
   margin-top: 10px;
@@ -332,15 +348,15 @@ export default {
 
 .error {
   color: rgb(124, 28, 28);
-  margin-top: 20px;
-  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .empty {
   height: 24px;
 }
 
-.mt-my{
+.mt-my {
   margin-top: -20px;
 }
 
@@ -349,8 +365,9 @@ export default {
 }
 
 .box2 {
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 12px;
+  margin-bottom: 5px;
 }
 
 .plan {
