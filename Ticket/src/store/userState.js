@@ -28,10 +28,10 @@ export const userState = {
             localStorage.removeItem('user')
         },
         EDIT_PROFILE(state, payload) {
-                if (state.user.id == payload.userData.id) {
-                    state.user.email = payload.userData.email;
-                    state.user.password = payload.userData.password;
-                    state.user.full_name = payload.userData.full_name;
+                if (state.currentUser.id == payload.userData.id) {
+                    state.currentUser.email = payload.userData.email;
+                    state.currentUser.password = payload.userData.password;
+                    state.currentUser.full_name = payload.userData.full_name;
                 }
             
         },
@@ -47,7 +47,7 @@ export const userState = {
                 console.log(error)
             }
         },
-        async setProfile({ commit }, id) {
+        async setProfile({ commit }, {id}) {
             try {
                 const res = await api.get("user/" + id);
                 commit('LOGIN', res.data.user)
@@ -59,7 +59,7 @@ export const userState = {
         async updateProfile({ commit }, { id, userData }) {
             try {
                 const res = await api.put("user/" + id, userData);
-                commit('EDIT_PROFILE', { id, userData })
+                commit('EDIT_PROFILE', { id: id,userData: userData })
                 console.log(userData)
                 return res.data.user    
             } catch (error) {

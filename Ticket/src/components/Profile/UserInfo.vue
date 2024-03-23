@@ -270,7 +270,7 @@ export default {
       this.dialog = !this.dialog
     },
     async Edit() {
-      this.errorsEmail = [],
+        this.errorsEmail = [],
         this.errorsPassword = [],
         this.errorsName = []
 
@@ -304,13 +304,14 @@ export default {
       }
 
       if (this.errorsEmail.length === 0 || this.errorsPassword.length === 0 || this.errorsName.length === 0) {
-        this.$store.dispatch('updateProfile', { id: this.user.id, userData: payload })
+        await this.$store.dispatch('updateProfile', { id: this.user.id, userData: payload })
         await this.$store.dispatch('setProfile', { id: this.user.id })
         this.dialog = false
       }
 
-
-
+      this.email = '',
+      this.password = '',
+      this.fullname = ''
 
     }
   }
@@ -350,6 +351,10 @@ export default {
   color: rgb(124, 28, 28);
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.error[data-v-68e6718f]{
+  font-size: 12px;
 }
 
 .empty {
